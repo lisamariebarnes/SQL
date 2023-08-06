@@ -1,0 +1,34 @@
+-- Creating a table to represent bands
+CREATE TABLE Bands (
+    BandID INT PRIMARY KEY,
+    Name VARCHAR(100),
+    YearFounded INT
+);
+
+-- Creating a table to represent members
+CREATE TABLE Members (
+    MemberID INT PRIMARY KEY,
+    Name VARCHAR(100),
+    Instrument VARCHAR(50),
+    BandID INT,
+    FOREIGN KEY (BandID) REFERENCES Bands(BandID)
+);
+
+-- Inserting bands
+INSERT INTO Bands (BandID, Name, YearFounded) VALUES
+    (1, 'The Beatles', 1960),
+    (2, 'Led Zeppelin', 1968);
+
+-- Inserting members for The Beatles
+INSERT INTO Members (MemberID, Name, Instrument, BandID) VALUES
+    (1, 'John Lennon', 'Vocals', 1),
+    (2, 'Paul McCartney', 'Bass Guitar', 1),
+    (3, 'George Harrison', 'Guitar', 1),
+    (4, 'Ringo Starr', 'Drums', 1);
+
+-- Inserting members for Led Zeppelin
+INSERT INTO Members (MemberID, Name, Instrument, BandID) VALUES
+    (5, 'Robert Plant', 'Vocals', 2),
+    (6, 'Jimmy Page', 'Guitar', 2),
+    (7, 'John Paul Jones', 'Bass Guitar', 2),
+    (8, 'John Bonham', 'Drums', 2);
