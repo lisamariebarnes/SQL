@@ -1,0 +1,38 @@
+-- Keywords Table
+CREATE TABLE Keywords (
+    KeywordID INT PRIMARY KEY AUTO_INCREMENT,
+    Keyword VARCHAR(255),
+    SearchVolume INT,
+    ColorCode VARCHAR(7) -- Example: '#FF5733'
+);
+
+-- Backlinks Table
+CREATE TABLE Backlinks (
+    BacklinkID INT PRIMARY KEY AUTO_INCREMENT,
+    URL VARCHAR(255),
+    AnchorText VARCHAR(255),
+    SourceURL VARCHAR(255),
+    DateAdded DATE,
+    ColorCode VARCHAR(7)
+);
+
+-- Traffic Table
+CREATE TABLE Traffic (
+    TrafficID INT PRIMARY KEY AUTO_INCREMENT,
+    Date DATE,
+    Visitors INT,
+    PageViews INT,
+    UniqueVisitors INT,
+    ColorCode VARCHAR(7)
+);
+
+-- Rankings Table
+CREATE TABLE Rankings (
+    RankingID INT PRIMARY KEY AUTO_INCREMENT,
+    KeywordID INT,
+    URL VARCHAR(255),
+    Rank INT,
+    Date DATE,
+    ColorCode VARCHAR(7),
+    FOREIGN KEY (KeywordID) REFERENCES Keywords(KeywordID)
+);
