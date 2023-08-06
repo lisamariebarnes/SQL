@@ -1,0 +1,46 @@
+-- music_theory.sql
+-- A SQL script to demonstrate concepts of music theory.
+
+-- Creating a table to represent musical scales
+CREATE TABLE Scales (
+    ScaleID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Type VARCHAR(50)
+);
+
+-- Creating a table to represent musical notes
+CREATE TABLE Notes (
+    NoteID INT PRIMARY KEY,
+    NoteName VARCHAR(10),
+    Frequency DECIMAL(10, 2)
+);
+
+-- Creating a table to represent chords
+CREATE TABLE Chords (
+    ChordID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    ScaleID INT,
+    FOREIGN KEY (ScaleID) REFERENCES Scales(ScaleID)
+);
+
+-- Inserting example scales
+INSERT INTO Scales (ScaleID, Name, Type) VALUES
+    (1, 'Major', 'Diatonic'),
+    (2, 'Minor', 'Diatonic'),
+    (3, 'Pentatonic', 'Anhemitonic');
+
+-- Inserting example notes
+INSERT INTO Notes (NoteID, NoteName, Frequency) VALUES
+    (1, 'C', 261.63),
+    (2, 'D', 293.66),
+    (3, 'E', 329.63),
+    (4, 'F', 349.23),
+    (5, 'G', 392.00),
+    (6, 'A', 440.00),
+    (7, 'B', 493.88);
+
+-- Inserting example chords
+INSERT INTO Chords (ChordID, Name, ScaleID) VALUES
+    (1, 'C Major', 1),
+    (2, 'A Minor', 2),
+    (3, 'G Major', 1);
