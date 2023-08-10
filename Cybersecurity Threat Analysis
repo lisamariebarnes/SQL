@@ -1,0 +1,45 @@
+-- ThreatLevels Table
+CREATE TABLE ThreatLevels (
+    ThreatLevelID INT PRIMARY KEY,
+    ThreatLevelName VARCHAR(50),
+    Emoji VARCHAR(10)
+);
+
+-- Vulnerabilities Table
+CREATE TABLE Vulnerabilities (
+    VulnerabilityID INT PRIMARY KEY,
+    VulnerabilityName VARCHAR(100),
+    Description TEXT,
+    ExampleInjectable VARCHAR(200),
+    ThreatLevelID INT
+);
+
+-- Insert Threat Levels
+INSERT INTO ThreatLevels (ThreatLevelID, ThreatLevelName, Emoji)
+VALUES
+    (1, 'No Threat', '\u1F60A'),        -- 😊
+    (2, 'Borderline Threat', '\u1F610'), -- 😐
+    (3, 'Hot Threat', '\u1F525'),       -- 🔥
+    (4, 'Red Hot Threat', '\u1F6A8');   -- 🚨
+
+-- Insert Vulnerabilities
+INSERT INTO Vulnerabilities (VulnerabilityID, VulnerabilityName, Description, ExampleInjectable, ThreatLevelID)
+VALUES
+    (1, 'Boolean-based Blind SQL Injection', 'Exploits boolean-based SQL queries to determine whether a statement is true or false.', "' OR 1=1 --", 2),
+    (2, 'Time-based Blind SQL Injection', 'Delays the server response to infer information about the database.', "' OR IF(1=1, SLEEP(5), 0) --", 3),
+    (3, 'UNION-based SQL Injection', 'Exploits the UNION SQL operator to combine result sets.', "' UNION SELECT null, username, password FROM users --", 4),
+    (4, 'Error-based SQL Injection', 'Uses error messages to extract information from the database.', "' AND 1=CONVERT(int, (SELECT @@version)) --", 3),
+    (5, 'Inferential SQL Injection', 'Makes inferences about the database by observing the application behavior.', "' OR 1=1", 1);
+--Query 
+SELECT
+    Vulnerabilities.VulnerabilityName,
+    Vulnerabilities.Description,
+    Vulnerabilities.ExampleInjectable,
+    ThreatLevels.ThreatLevelName,
+    ThreatLevels.Emoji
+FROM
+    Vulnerabilities
+JOIN
+    ThreatLevels ON Vulnerabilities.ThreatLevelID = ThreatLevels.ThreatLevelID
+ORDER BY
+    ThreatLevels.ThreatLevelID DESC;
