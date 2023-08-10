@@ -32,3 +32,14 @@ INSERT INTO Members (MemberID, Name, Instrument, BandID) VALUES
     (6, 'Jimmy Page', 'Guitar', 2),
     (7, 'John Paul Jones', 'Bass Guitar', 2),
     (8, 'John Bonham', 'Drums', 2);
+--Query
+SELECT
+    B.Name AS BandName,
+    M.Name AS MemberName,
+    M.Instrument
+FROM
+    Bands B
+JOIN
+    Members M ON B.BandID = M.BandID
+ORDER BY
+    B.Name ASC, M.Name ASC;
