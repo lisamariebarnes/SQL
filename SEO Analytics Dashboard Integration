@@ -36,3 +36,20 @@ CREATE TABLE Rankings (
     ColorCode VARCHAR(7),
     FOREIGN KEY (KeywordID) REFERENCES Keywords(KeywordID)
 );
+
+-- Placeholder for Google Analytics Integration/API Fetch
+-- This is where you might add code to retrieve data from Google Analytics API and insert into the appropriate tables.
+
+-- Example Keywords for SEO
+INSERT INTO Keywords (Keyword, SearchVolume, ColorCode)
+VALUES
+    ('seo tools', 500, '#00A1DE'),
+    ('backlink strategy', 200, '#FF5733'),
+    ('on-page optimization', 350, '#4CAF50'),
+    ('keyword research', 450, '#FFC107'),
+    ('search engine ranking', 300, '#9C27B0');
+
+-- Query to Retrieve Keywords in Alphabetical Order
+SELECT Keyword, SearchVolume
+FROM Keywords
+ORDER BY Keyword ASC;
