@@ -1,3 +1,22 @@
+-- Creating a table for genres
+CREATE TABLE Genres (
+    GenreID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    ColorCode VARCHAR(10) -- For color coding each genre
+);
+
+-- Creating a table for ratings
+CREATE TABLE Ratings (
+    RatingID INT PRIMARY KEY,
+    Rating FLOAT
+);
+
+-- Creating a table for actors
+CREATE TABLE Actors (
+    ActorID INT PRIMARY KEY,
+    Name VARCHAR(100)
+);
+
 -- Creating a table for movies
 CREATE TABLE Movies (
     MovieID INT PRIMARY KEY,
@@ -8,23 +27,11 @@ CREATE TABLE Movies (
     FOREIGN KEY (RatingID) REFERENCES Ratings(RatingID)
 );
 
--- Creating a table for genres
-CREATE TABLE Genres (
-    GenreID INT PRIMARY KEY,
-    Name VARCHAR(50),
-    ColorCode VARCHAR(10) -- For color coding each genre
-);
-
--- Creating a table for actors
-CREATE TABLE Actors (
-    ActorID INT PRIMARY KEY,
-    Name VARCHAR(100)
-);
-
--- Creating a table for ratings
-CREATE TABLE Ratings (
-    RatingID INT PRIMARY KEY,
-    Rating FLOAT
+-- Creating a table for moods and corresponding genres
+CREATE TABLE Moods (
+    Mood VARCHAR(50),
+    GenreID INT,
+    FOREIGN KEY (GenreID) REFERENCES Genres(GenreID)
 );
 
 -- Creating a table for movie actors
@@ -35,37 +42,42 @@ CREATE TABLE MovieActors (
     FOREIGN KEY (ActorID) REFERENCES Actors(ActorID)
 );
 
--- Creating a table for moods and corresponding genres
-CREATE TABLE Moods (
-    Mood VARCHAR(50),
-    GenreID INT,
-    FOREIGN KEY (GenreID) REFERENCES Genres(GenreID)
-);
-
 -- Inserting genres
-INSERT INTO Genres (GenreID, Name, ColorCode) VALUES
+INSERT INTO Genres (GenreID, Name, ColorCode)
+VALUES
     (1, 'Horror', '#FF0000'),
     (2, 'Romance', '#FF69B4'),
-    (3, 'Comedy', '#FFFF00'),
-    -- ... More genres ...
+    (3, 'Comedy', '#FFFF00');
+
+-- Inserting ratings
+INSERT INTO Ratings (RatingID, Rating)
+VALUES
+    (1, 4.5),
+    (2, 3.8),
+    (3, 4.2);
+
+-- Inserting movies
+INSERT INTO Movies (MovieID, Title, GenreID, RatingID)
+VALUES
+    (1, 'The Shining', 1, 1), -- Horror
+    (2, 'The Notebook', 2, 2), -- Romance
+    (3, 'Dumb and Dumber', 3, 3); -- Comedy
 
 -- Inserting moods and linking them to genres
-INSERT INTO Moods (Mood, GenreID) VALUES
+INSERT INTO Moods (Mood, GenreID)
+VALUES
     ('Happy', 3), -- Comedy
     ('Sad', 2), -- Romance
-    ('Angry', 1), -- Horror
-    -- ... More moods ...
+    ('Angry', 1); -- Horror
 
--- Query to recommend movies based on a mood
--- Here, we are recommending movies for a 'Happy' mood
-SELECT
-    m.Title AS Movie,
-    g.Name AS Genre,
-    r.Rating AS Rating
-FROM
-    Movies m
-JOIN Genres g ON m.GenreID = g.GenreID
-JOIN Ratings r ON m.RatingID = r.RatingID
-JOIN Moods md ON g.GenreID = md.GenreID
-WHERE
-    md.Mood = 'Happy';
+-- This query retrieves movies based on a specific mood
+SELECT Movies.Title, Genres.Name AS Genre, Moods.Mood
+FROM Movies
+JOIN Genres ON Movies.GenreID = Genres.GenreID
+JOIN Moods ON Genres.GenreID = Moods.GenreID
+WHERE Moods.Mood = 'Happy';
+-- This query retrieves movies based on a specific genre
+SELECT Movies.Title, Genres.Name AS Genre
+FROM Movies
+JOIN Genres ON Movies.GenreID = Genres.GenreID
+WHERE Genres.Name = 'Horror';
