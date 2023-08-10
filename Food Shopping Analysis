@@ -1,0 +1,37 @@
+CREATE TABLE store (
+    id INTEGER PRIMARY KEY,
+    item TEXT,
+    section TEXT,
+    price DECIMAL(5, 2),
+    popularity INTEGER
+);
+
+INSERT INTO store VALUES (1, "vitamins", "health", 10.99, 50);
+INSERT INTO store VALUES (2, "chocolate frozen yogurt", "frozen", 5.99, 95);
+INSERT INTO store VALUES (3, "potato chips", "snacks", 2.99, 55);
+INSERT INTO store VALUES (4, "salsa", "fresh", 2.99, 50);
+INSERT INTO store VALUES (5, "soap products", "hygiene", 1.99, 65);
+INSERT INTO store VALUES (6, "antibacterial lotion", "hygiene", 3.25, 43);
+INSERT INTO store VALUES (7, "collagen supplement", "health", 8.99, 35);
+INSERT INTO store VALUES (8, "lettuce", "fresh", 2.99, 50);
+INSERT INTO store VALUES (9, "raspberry frozen pops", "frozen", 3.49, 75);
+INSERT INTO store VALUES (10, "oranges", "fresh", 0.75, 60);
+INSERT INTO store VALUES (11, "vitamin D supplement", "health", 12.99, 33);
+INSERT INTO store VALUES (12, "protein powder", "health", 24.99, 80);
+INSERT INTO store VALUES (13, "nutritional yeast", "health", 6.99, 29);
+INSERT INTO store VALUES (14, "chocolate frozen yogurt", "frozen", 4.99, 47);
+
+-- Display the database ordered by price.
+SELECT * FROM store
+ORDER BY price DESC;
+
+-- What is the average price of items in the health section?
+SELECT AVG(price) AS "avg_health_item_price"
+FROM store
+WHERE section = 'health';
+
+-- What are the most 5 popular items?
+SELECT item, price, popularity
+FROM store
+ORDER BY popularity DESC
+LIMIT 5;
